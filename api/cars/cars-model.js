@@ -7,19 +7,19 @@ const db = require('../../data/db-config')
 
 const getAll = () => {
   // DO YOUR MAGIC
-  return db('cars'); // returns a promise that resolves to an **array** with all records in the table
+  return db('cars') // returns a promise that resolves to an **array** with all records in the table
 }
 
-const getById = (id) => { // will resolve to the **record** we want (if the id is unique for a table) or undefined
+const getById = id => { // will resolve to the **record** we want (if the id is unique for a table) or undefined
   // DO YOUR MAGIC
 
-  return db('cars').where('id', id).first()
+  return db('cars').where({ "id": id }).first()
 }
 
 const create = async car => { // resolves to array of id's of the created records
   // DO YOUR MAGIC
-  const [id] = await db('car').insert({ 'car': car }); // might be ({car: "car"})
-  return getById(id);
+  const [id] = await db('cars').insert(car, "id"); // might be ({car: "car"})
+  return getById(id)
   //db('cars').insert({ 'car': car }) // try db('cars').insert(car) if this doesn't work
 }
 

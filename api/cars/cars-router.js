@@ -20,10 +20,16 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/:id', checkCarId, async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         const foundCar = await carsModel.getById(req.params.id)
-        res.status(200).json(foundCar)
+        console.log(foundCar, "found car getbyid")
+        if (!foundCar) {
+            res.status(404).json({ message: `car with id ${req.params.id} is not found` })
+        }
+        if (foundCar) {
+            res.status(201).json(foundCar)
+        }
     } catch {
         res.status(500).json({ message: "The Car with that Id could not be found." })
     }

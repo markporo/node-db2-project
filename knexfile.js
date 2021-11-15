@@ -18,14 +18,13 @@ const sharedConfig = {
 module.exports = {
   development: {
     ...sharedConfig,
-    connection: { filename: './dev.sqlite3' },
+    connection: { filename: './data/dealer.db3' },
   },
   testing: {
     ...sharedConfig,
     connection: { filename: './data/testing.db3' },
   },
 }
-
 
 
 // module.exports = {

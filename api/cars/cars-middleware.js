@@ -3,15 +3,15 @@ const vinValidator = require('vin-validator');
 
 exports.checkCarId = (req, res, next) => {
   // DO YOUR MAGIC
-  const [id] = req.params;
+  // const [id] = req.params;
   carsModel
-    .getById(id)
+    .getById(req.params.id)
     .then(car => {
       if (car) {
         req.car = car;
         next()
       } else {
-        res.status(404).json({ message: `car with id ${id} is not found` })
+        res.status(404).json({ message: `car with id ${req.params.id} is not found` })
       }
     })
     .catch(() => {
@@ -31,7 +31,7 @@ exports.checkCarPayload = (req, res, next) => {
   } else if (!req.body.mileage) {
     res.status(400).json({ message: "mileage is missing" })
   } else if (typeof req.body.vin !== "string" || typeof req.body.model !== "string" || typeof req.body.make !== "string") {
-    res.status(400).json({ message: "name of account must be a string" })
+    res.status(400).json({ message: "field must be a string" })
   } else if (typeof req.body.mileage !== "number") {
     res.status(400).json({ message: "mileage must be a number" })
   }
@@ -55,10 +55,10 @@ exports.checkVinNumberUnique = (req, res, next) => {
   // DO YOUR MAGIC
   carsModel
     .getAll()
-    .then((accounts) => {
-      let matchingCar = accounts.find(c => c.vin === req.body.vin)
+    .then((vins) => {
+      let matchingCar = vins.find(c => c.vin === req.body.vin)
 
-      if (matchingCar.vin === req.body.vin) {
+      if (matchingCar) {
         res.status(400).json({ message: `vin ${req.body.vin} already exists` });
       } else {
         next();

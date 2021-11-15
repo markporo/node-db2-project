@@ -18,7 +18,7 @@ server.use(cors())
 //server.use(logger)
 
 //connect Routes
-server.use('/cars', carsRouter)
+server.use('/api/cars', carsRouter)
 
 //home page
 server.get('/', (req, res) => {
@@ -30,11 +30,11 @@ server.get('/', (req, res) => {
         });
 })
 
-// catch all endpoint
-// server.use('*', (req, res) => {
-//     res.status(404).json({
-//         message: 'not found',
-//     })
-// })
+//catch all endpoint
+server.use('*', (req, res) => {
+    res.status(404).json({
+        message: 'not found',
+    })
+})
 
 module.exports = server
